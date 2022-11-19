@@ -1,9 +1,9 @@
 import React from 'react';
-
+import Board from './Components/Board';
 function App() {
   return (
     <div className="App">
-      Hey
+      <Board></Board>
     </div>
   );
 }
