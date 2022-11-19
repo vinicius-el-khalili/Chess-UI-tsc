@@ -1,5 +1,8 @@
 import React from "react";
 import { Chess, Piece, Square } from "chess.js";
+import PieceComponent from "./PieceComponent";
+import { timeStamp } from "console";
+
 
 type SquareProps={
     backgroundColor:string,
@@ -9,6 +12,7 @@ type SquareProps={
 type SquareState={
     piece:Piece|false
 }
+
 class SquareComponent extends React.Component<SquareProps,SquareState>{
     constructor(props:SquareProps){
         super(props)
@@ -26,7 +30,7 @@ class SquareComponent extends React.Component<SquareProps,SquareState>{
                 height:"45px",
                 backgroundColor:this.props.backgroundColor
             }}>
-                {this.state.piece?this.state.piece.color+this.state.piece.type:""}
+                {this.state.piece?(<PieceComponent piece={this.state.piece}></PieceComponent>):""}
             </div>
         )
     }

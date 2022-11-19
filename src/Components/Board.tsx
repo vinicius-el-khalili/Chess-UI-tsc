@@ -1,8 +1,9 @@
-import { Chess, Square } from "chess.js";
+import { Chess } from "chess.js";
 import React from "react";
-import SquareComponent from "./Square";
+import SquareComponent from "./SquareComponent";
 import sqrReff from "../Utilities/sqrReff"
 import _SQRS from "../Utilities/_SQRS"
+
 // --------------------------------------- LAYOUT
 
   // white:{board:{display:"flex"},row:{display:"flex",flexDirection:"column-reverse"}},
@@ -31,10 +32,11 @@ class Board extends React.Component<boardProps,boardState>{
     }
 
     // --------------------------------------- // UPDATE BOARD VIEW WITH GAME
-
+    componentDidMount(): void {
+        this.updateView()
+    }
     updateView(){
         for (let _sqr in this.sqrReff){
-            console.log(this.sqrReff)
             this.sqrReff[_sqr].current.update()
         }
     }
@@ -64,7 +66,6 @@ class Board extends React.Component<boardProps,boardState>{
 
         return(<>
             <div className="Board" style={this.state.boardStyle}>{board}</div>
-            <button onClick={this.updateView}>updateView</button>
         </>)
 
         // --------------------------------------- //
