@@ -14,7 +14,7 @@ type boardState={
     rowStyle:React.CSSProperties,
     boardStyle:React.CSSProperties,
     chess:Chess}
-    
+
 class Board extends React.Component<boardProps,boardState>{
     sqrReff:{[key:string]:any}
     _SQRS:string[]
@@ -40,6 +40,7 @@ class Board extends React.Component<boardProps,boardState>{
     }
 
     // --------------------------------------- // RENDER
+
     render(): React.ReactNode {
         let board=[]
         for (let i=0;i<8;i++){
