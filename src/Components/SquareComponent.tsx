@@ -8,6 +8,7 @@ type SquareProps={
     chess:Chess
     sqr:Square,
     handlePieceClick:any,
+    handleMoverClick:any
 }
 type SquareState={
     piece:Piece|false,
@@ -49,7 +50,10 @@ class SquareComponent extends React.Component<SquareProps,SquareState>{
                 handlePieceClick={this.props.handlePieceClick} 
                 piece={this.state.piece}></PieceComponent>):""}
 
-                {this.state.mover && <MoverComponent/>}
+                {this.state.mover && <MoverComponent 
+                handleMoverClick={this.props.handleMoverClick}
+                sqr={this.props.sqr}
+                />}
             </div>
         )
     }

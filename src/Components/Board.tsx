@@ -1,4 +1,4 @@
-import { Chess, Piece, Square } from "chess.js";
+import { Chess, Move, Square } from "chess.js";
 import React from "react";
 import SquareComponent from "./SquareComponent";
 import sqrReff from "../Utilities/sqrReff"
@@ -16,6 +16,9 @@ type boardState={
     boardStyle:React.CSSProperties,
     chess:Chess,
     selectedSquare:Square|null,
+    console1:any,
+    console2:any,
+    console3:any
 }
 
 class Board extends React.Component<boardProps,boardState>{
@@ -26,13 +29,17 @@ class Board extends React.Component<boardProps,boardState>{
         this.state={
             rowStyle:{display:"flex",flexDirection:"column-reverse"},
             boardStyle:{display:"flex"},
-            chess:new Chess('rnb2rk1/pp2qp1p/2p2n1p/3pp3/2BPP3/P1P2N2/P2Q1PPP/R3R1K1 w - - 3 12'),
-            selectedSquare:null
+            chess:new Chess("5r2/pp1bP1kp/n1p1R2p/2n5/8/P1P5/P4QPP/4R1K1 w - - 5 21"),
+            selectedSquare:null,
+            console1:'',
+            console2:'',
+            console3:''
         }
         this.sqrReff=sqrReff()
         this._SQRS=_SQRS()
         this.updateView=this.updateView.bind(this)
         this.handlePieceClick=this.handlePieceClick.bind(this)
+        this.handleMoverClick=this.handleMoverClick.bind(this)
     }
 
     // --------------------------------------- // MOUNT
@@ -43,21 +50,45 @@ class Board extends React.Component<boardProps,boardState>{
 
     // --------------------------------------- // UPDATE
     updateView(){
+        this._SQRS.map(_sqr=>this.sqrReff[_sqr].current.clear())
         for (let _sqr in this.sqrReff){
             this.sqrReff[_sqr].current.update()
         }
     }
 
-    // --------------------------------------- // 
+    // --------------------------------------- // handlePieceClick
     handlePieceClick(sqr:Square){
         // 1. Check all possible moves for the clicked square and highlight the SquareComponent with Mover objects.
         let moves:string[]=[]
-        // @ts-ignore
-        this.state.chess.moves({square:sqr}).map(move=>moves.push(move.replace('x','').replace('+','').replace('#','').slice(-2)))
+        let sanMap=[]
+        this.state.chess.moves({square:sqr}).map(move=>{
+            // @ts-ignore
+            if (!move.includes("=")){
+                // @ts-ignore
+                let _m = move.replace("+","").replace("#","").replace("x","").slice(-2)
+                if(!moves.includes(_m)){moves.push(_m)}
+            }else{
+                // @ts-ignore
+                let _m = move.replace("+","").replace("#","").replace("x","").slice(-4,-2)
+                if(!moves.includes(_m)){moves.push(_m)}
+            }
+        })
         this._SQRS.map(_sqr=>this.sqrReff[_sqr].current.clear())
         // 2. Add PreMovers
         moves.map(_sqr=>this.sqrReff[_sqr].current.preMove())
         this.setState({selectedSquare:sqr})
+        this.setState({console1:this.state.chess.moves().join(",")})
+        this.setState({console2:moves.join(",")})
+        this.setState({console3:this.state.chess.fen()})
+    }
+
+    // --------------------------------------- // handlePieceClick
+    handleMoverClick(sqr:Square){
+        // @ts-ignore
+        this.state.chess.move({from:this.state.selectedSquare, to: sqr})
+        // @ts-ignore
+        this.state.chess.move({from:this.state.selectedSquare, to: sqr,promotion:"q"})
+        this.updateView()
     }
 
     // --------------------------------------- // RENDER
@@ -69,6 +100,7 @@ class Board extends React.Component<boardProps,boardState>{
                 let sqr="abcdefgh"[i]+"12345678"[j]
                 row.push(<SquareComponent
                     handlePieceClick={this.handlePieceClick}
+                    handleMoverClick={this.handleMoverClick}
                     backgroundColor={(i+j)%2===0?"#53917E":"#FCD0A1"}
                     chess={this.state.chess}
                     // @ts-ignore
@@ -86,6 +118,9 @@ class Board extends React.Component<boardProps,boardState>{
         return(<>
             <div className="Board" style={this.state.boardStyle}>{board}</div>
             <h1>{this.state.selectedSquare && this.state.selectedSquare}</h1>
+            <h1>{this.state.console1 && this.state.console1}</h1>
+            <h1>{this.state.console2 && this.state.console2}</h1>
+            <h1>{this.state.console3 && this.state.console3}</h1>
         </>)
 
         // --------------------------------------- //
