@@ -3,7 +3,6 @@ import React from "react";
 import SquareComponent from "./SquareComponent";
 import sqrReff from "../Utilities/sqrReff"
 import _SQRS from "../Utilities/_SQRS"
-import { stat } from "fs";
 
 // --------------------------------------- LAYOUT
 
@@ -81,13 +80,14 @@ class Board extends React.Component<boardProps,boardState>{
 
     // --------------------------------------- // handlePieceClick
     handleMoverClick(sqr:Square){
-        let moves=this.state.chess.moves()
         // @ts-ignore
         let move = this.state.chess.move({from:this.state.selectedSquare,to:sqr})
         if (!move){
             // @ts-ignore
             move = this.state.chess.move({from:this.state.selectedSquare,to:sqr,promotion:"q"})
-            this.setState({console2:"uepa"})
+            if (move){
+                this.sqrReff[sqr].current.summonPromoter()
+            }
         }
         this.setState({console1:move?.san})
         this.updateView()

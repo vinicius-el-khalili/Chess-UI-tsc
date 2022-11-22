@@ -13,7 +13,8 @@ type SquareProps={
 type SquareState={
     piece:Piece|false,
     background:string
-    mover:boolean
+    mover:boolean,
+    promoter:boolean
 }
 
 class SquareComponent extends React.Component<SquareProps,SquareState>{
@@ -22,7 +23,8 @@ class SquareComponent extends React.Component<SquareProps,SquareState>{
         this.state={
             piece:false,
             background:this.props.backgroundColor,
-            mover:false
+            mover:false,
+            promoter:false
         }
     }
     update(){
@@ -31,7 +33,10 @@ class SquareComponent extends React.Component<SquareProps,SquareState>{
     preMove(){
         // change square background
         this.setState({background:"cornflowerblue",mover:true})
-    }   
+    }
+    summonPromoter(){
+        this.setState({promoter:true})
+    }
     clear(){
         // change background back to normal
         this.setState({background:this.props.backgroundColor,mover:false})
@@ -47,12 +52,22 @@ class SquareComponent extends React.Component<SquareProps,SquareState>{
                 {this.state.piece?(<PieceComponent
                 sqr={this.props.sqr}
                 handlePieceClick={this.props.handlePieceClick} 
-                piece={this.state.piece}></PieceComponent>):""}
+                piece={this.state.piece}></PieceComponent>):null}
 
-                {this.state.mover && <MoverComponent 
+                {this.state.mover&&<MoverComponent 
                 handleMoverClick={this.props.handleMoverClick}
                 sqr={this.props.sqr}
                 />}
+
+                {this.state.promoter&&<div 
+                style={{
+                    width:"45px",
+                    height:"45px",
+                    backgroundColor:"white",
+                    position:"absolute",
+                    zIndex:3,
+                    border:"5px solid black"
+                }}></div>}
             </div>
         )
     }

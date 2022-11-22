@@ -4,7 +4,19 @@ type MoverProps={
     handleMoverClick:any,
     sqr:Square
 }
-class MoverComponent extends React.Component<MoverProps,{}>{
+type MoverState={
+    promoter:boolean
+}
+class MoverComponent extends React.Component<MoverProps,MoverState>{
+    constructor(props:MoverProps){
+        super(props)
+        this.state={
+            promoter:false
+        }
+    }
+    summonPromoter(){
+        this.setState({promoter:true})
+    }
     render(): React.ReactNode {
         return(<>
         <div className="MoverComponent" 
