@@ -3,6 +3,7 @@ import React from "react";
 import SquareComponent from "./SquareComponent";
 import sqrReff from "../Utilities/sqrReff"
 import _SQRS from "../Utilities/_SQRS"
+import { stat } from "fs";
 
 // --------------------------------------- LAYOUT
 
@@ -76,18 +77,32 @@ class Board extends React.Component<boardProps,boardState>{
         // 2. Add PreMovers
         moves.map(_sqr=>this.sqrReff[_sqr].current.preMove())
         this.setState({selectedSquare:sqr})
-        this.setState({console1:this.state.chess.moves().join(",")})
-        this.setState({console2:moves.join(",")})
-        this.setState({console3:this.state.chess.fen()})
     }
 
     // --------------------------------------- // handlePieceClick
     handleMoverClick(sqr:Square){
         // @ts-ignore
-        this.state.chess.move({from:this.state.selectedSquare, to: sqr})
+        let wat = this.state.chess.move({from:this.state.selectedSquare, to: sqr})
         // @ts-ignore
         this.state.chess.move({from:this.state.selectedSquare, to: sqr,promotion:"q"})
         this.updateView()
+        this.setState({console1:this.state.chess.moves().join("|")})
+        let chessMoves=this.state.chess.moves()
+        // check for promotion
+        chessMoves.map(move=>{
+            // @ts-ignore
+            if(move.includes("=")){
+                // @ts-ignore
+                if (move.replace("+","").replace("#","").replace("x","").slice(-4,-2)==sqr){
+                    this.setState({console2:"promoted!"})
+                }
+            }
+        })
+        this.setState({
+            console1:sqr,
+            console2:this.state.chess.moves().join("|"),
+            console3:wat?.flags
+        })
     }
 
     // --------------------------------------- // RENDER
@@ -116,10 +131,9 @@ class Board extends React.Component<boardProps,boardState>{
 
         return(<>
             <div className="Board" style={this.state.boardStyle}>{board}</div>
-            <h1>{this.state.selectedSquare && this.state.selectedSquare}</h1>
-            <h1>{this.state.console1 && this.state.console1}</h1>
-            <h1>{this.state.console2 && this.state.console2}</h1>
-            <h1>{this.state.console3 && this.state.console3}</h1>
+            <h1>{this.state.console1}</h1>
+            <h1>{this.state.console2}</h1>
+            <h1>{this.state.console3}</h1>
         </>)
 
         // --------------------------------------- //
