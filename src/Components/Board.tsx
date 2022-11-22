@@ -110,7 +110,6 @@ class Board extends React.Component<boardProps,boardState>{
         this.setState({promoter:false})
         this.sqrReff[this.state.promotionSqr].current.dismissPromoter()
         this.updateView()
-        
     }
     // --------------------------------------- // RENDER
     render(): React.ReactNode {
