@@ -1,4 +1,4 @@
-import { Chess, Move, Square } from "chess.js";
+import { Chess, Square } from "chess.js";
 import React from "react";
 import SquareComponent from "./SquareComponent";
 import sqrReff from "../Utilities/sqrReff"
@@ -60,7 +60,6 @@ class Board extends React.Component<boardProps,boardState>{
     handlePieceClick(sqr:Square){
         // 1. Check all possible moves for the clicked square and highlight the SquareComponent with Mover objects.
         let moves:string[]=[]
-        let sanMap=[]
         this.state.chess.moves({square:sqr}).map(move=>{
             // @ts-ignore
             if (!move.includes("=")){

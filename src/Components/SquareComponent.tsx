@@ -43,7 +43,6 @@ class SquareComponent extends React.Component<SquareProps,SquareState>{
                 height:"45px",
                 backgroundColor:this.state.background,
                 overflow:"hidden"
-
             }}>
                 {this.state.piece?(<PieceComponent
                 sqr={this.props.sqr}
