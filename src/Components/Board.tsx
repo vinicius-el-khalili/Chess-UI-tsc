@@ -1,8 +1,9 @@
-import { Chess, Square } from "chess.js";
+import { Chess, Piece, Square } from "chess.js";
 import React from "react";
 import SquareComponent from "./SquareComponent";
 import sqrReff from "../Utilities/sqrReff"
 import _SQRS from "../Utilities/_SQRS"
+import Promoter from "./Promoter";
 
 // --------------------------------------- LAYOUT
 
@@ -16,6 +17,8 @@ type boardState={
     boardStyle:React.CSSProperties,
     chess:Chess,
     selectedSquare:Square|null,
+    promoter:boolean,
+    promotionSqr:string,
     console1:any,
     console2:any,
     console3:any
@@ -31,6 +34,8 @@ class Board extends React.Component<boardProps,boardState>{
             boardStyle:{display:"flex"},
             chess:new Chess("5r2/pp1bP1kp/n1p1R2p/2n5/8/P1P5/P4QPP/4R1K1 w - - 5 21"),
             selectedSquare:null,
+            promoter:false,
+            promotionSqr:"",
             console1:'',
             console2:'',
             console3:''
@@ -40,6 +45,7 @@ class Board extends React.Component<boardProps,boardState>{
         this.updateView=this.updateView.bind(this)
         this.handlePieceClick=this.handlePieceClick.bind(this)
         this.handleMoverClick=this.handleMoverClick.bind(this)
+        this.promote=this.promote.bind(this)
     }
 
     // --------------------------------------- // MOUNT
@@ -87,13 +93,25 @@ class Board extends React.Component<boardProps,boardState>{
             move = this.state.chess.move({from:this.state.selectedSquare,to:sqr,promotion:"q"})
             if (move){
                 this.sqrReff[sqr].current.summonPromoter()
+                this.setState({promoter:true,promotionSqr:sqr})
             }
+            this.state.chess.undo()
         }
-        this.setState({console1:move?.san})
         this.updateView()
-
     }
-
+    // --------------------------------------- // RENDER
+    promote(piece:Piece){
+        console.log("promoting....")
+        this.state.chess.move({
+            from:this.state.selectedSquare!,
+            to:this.state.promotionSqr,
+            promotion:piece.type
+        })
+        this.setState({promoter:false})
+        this.sqrReff[this.state.promotionSqr].current.dismissPromoter()
+        this.updateView()
+        
+    }
     // --------------------------------------- // RENDER
     render(): React.ReactNode {
         let board=[]
@@ -119,7 +137,10 @@ class Board extends React.Component<boardProps,boardState>{
         // --------------------------------------- //
 
         return(<>
-            <div className="Board" style={this.state.boardStyle}>{board}</div>
+            <div className="Board" style={this.state.boardStyle}>
+                {board}
+                {this.state.promoter && <Promoter promote={this.promote}/>}
+                </div>
             <h1>{this.state.console1}</h1>
             <h1>{this.state.console2}</h1>
             <h1>{this.state.console3}</h1>

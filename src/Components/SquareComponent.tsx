@@ -2,7 +2,6 @@ import React from "react";
 import { Chess, Piece, Square } from "chess.js";
 import PieceComponent from "./PieceComponent";
 import MoverComponent from "./MoverComponent"
-import Promoter from "./Promoter";
 
 type SquareProps={
     backgroundColor:string,
@@ -38,6 +37,9 @@ class SquareComponent extends React.Component<SquareProps,SquareState>{
     summonPromoter(){
         this.setState({promoter:true})
     }
+    dismissPromoter(){
+        this.setState({promoter:false})
+    }
     clear(){
         // change background back to normal
         this.setState({background:this.props.backgroundColor,mover:false})
@@ -60,8 +62,15 @@ class SquareComponent extends React.Component<SquareProps,SquareState>{
                 sqr={this.props.sqr}
                 />}
 
-                {this.state.promoter&&<>
-                <Promoter></Promoter></>
+                {this.state.promoter&&
+                <div
+                style={{
+                    width:"45px",
+                    height:"45px",
+                    border:"2px dashed #08415C",
+                    position:"absolute",
+                    zIndex:"3"
+                }}/>
                 }
             </div>
         )
