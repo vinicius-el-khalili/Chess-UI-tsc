@@ -81,28 +81,17 @@ class Board extends React.Component<boardProps,boardState>{
 
     // --------------------------------------- // handlePieceClick
     handleMoverClick(sqr:Square){
+        let moves=this.state.chess.moves()
         // @ts-ignore
-        let wat = this.state.chess.move({from:this.state.selectedSquare, to: sqr})
-        // @ts-ignore
-        this.state.chess.move({from:this.state.selectedSquare, to: sqr,promotion:"q"})
-        this.updateView()
-        this.setState({console1:this.state.chess.moves().join("|")})
-        let chessMoves=this.state.chess.moves()
-        // check for promotion
-        chessMoves.map(move=>{
+        let move = this.state.chess.move({from:this.state.selectedSquare,to:sqr})
+        if (!move){
             // @ts-ignore
-            if(move.includes("=")){
-                // @ts-ignore
-                if (move.replace("+","").replace("#","").replace("x","").slice(-4,-2)==sqr){
-                    this.setState({console2:"promoted!"})
-                }
-            }
-        })
-        this.setState({
-            console1:sqr,
-            console2:this.state.chess.moves().join("|"),
-            console3:wat?.flags
-        })
+            move = this.state.chess.move({from:this.state.selectedSquare,to:sqr,promotion:"q"})
+            this.setState({console2:"uepa"})
+        }
+        this.setState({console1:move?.san})
+        this.updateView()
+
     }
 
     // --------------------------------------- // RENDER
