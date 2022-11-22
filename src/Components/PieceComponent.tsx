@@ -8,7 +8,6 @@ type PieceProps={
 }
 type PieceState={}
 class PieceComponent extends React.Component<PieceProps,PieceState>{
-    
     render(): React.ReactNode {
         return(<img
         style={{height:"45px",width:"45px",zIndex:1,position:"absolute"}}

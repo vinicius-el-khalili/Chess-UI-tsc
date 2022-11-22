@@ -66,7 +66,7 @@ class SquareComponent extends React.Component<SquareProps,SquareState>{
                     backgroundColor:"white",
                     position:"absolute",
                     zIndex:3,
-                    border:"5px solid black"
+                    border:"2px dashed black"
                 }}></div>}
             </div>
         )
