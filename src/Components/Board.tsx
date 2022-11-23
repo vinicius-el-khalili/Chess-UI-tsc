@@ -4,6 +4,7 @@ import SquareComponent from "./SquareComponent";
 import sqrReff from "../Utilities/sqrReff"
 import _SQRS from "../Utilities/_SQRS"
 import Promoter from "./Promoter";
+import BoardControllers from "./BoardControllers";
 
 // --------------------------------------- LAYOUT
 
@@ -121,6 +122,7 @@ class Board extends React.Component<boardProps,boardState>{
         this.sqrReff[this.state.promotionSqr].current.dismissPromoter()
         this.updateView()
     }
+
     // --------------------------------------- // RENDER
     render(): React.ReactNode {
         let board=[]
@@ -150,6 +152,7 @@ class Board extends React.Component<boardProps,boardState>{
                 {board}
                 {this.state.promoter && <Promoter promote={this.promote} color={this.state.chess.turn()}/>}
                 </div>
+            <BoardControllers></BoardControllers>
             <h3>{this.state.console3}</h3>
             <h3>{this.state.console1}</h3>
             <h3>{this.state.console2}</h3>
