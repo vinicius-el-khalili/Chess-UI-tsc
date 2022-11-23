@@ -1,8 +1,9 @@
-import { Piece, Square } from "chess.js"
+import { Color, Piece, Square } from "chess.js"
 import React from "react"
 import PromoterPiece from "./PromoterPiece"
 type promoterProps={
-    promote:any
+    promote:any,
+    color:Color
 }
 type promoterState={}
 const containerStyle:React.CSSProperties={
@@ -29,10 +30,10 @@ class Promoter extends React.Component<promoterProps,promoterState>{
         return(<>
         <div style={containerStyle}>
             <div style={style2}>
-                <PromoterPiece piece={{color:"w",type:"q"}} promote={this.props.promote}></PromoterPiece>
-                <PromoterPiece piece={{color:"w",type:"b"}} promote={this.props.promote}></PromoterPiece>
-                <PromoterPiece piece={{color:"w",type:"n"}} promote={this.props.promote}></PromoterPiece>
-                <PromoterPiece piece={{color:"w",type:"r"}} promote={this.props.promote}></PromoterPiece>
+                <PromoterPiece piece={{color:this.props.color,type:"q"}} promote={this.props.promote}></PromoterPiece>
+                <PromoterPiece piece={{color:this.props.color,type:"b"}} promote={this.props.promote}></PromoterPiece>
+                <PromoterPiece piece={{color:this.props.color,type:"n"}} promote={this.props.promote}></PromoterPiece>
+                <PromoterPiece piece={{color:this.props.color,type:"r"}} promote={this.props.promote}></PromoterPiece>
             </div>
         </div>
         </>)
