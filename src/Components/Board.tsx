@@ -32,7 +32,7 @@ class Board extends React.Component<boardProps,boardState>{
         this.state={
             rowStyle:{display:"flex",flexDirection:"column-reverse"},
             boardStyle:{display:"flex"},
-            chess:new Chess("r3k2r/ppp1qppp/8/4P3/2p5/8/PPP2PPP/R3K2R w KQkq - 1 17"), //"5r2/pp1bP1kp/n1p1R2p/2n5/8/P1P5/P4QPP/4R1K1 w - - 5 21"
+            chess:new Chess(), //"5r2/pp1bP1kp/n1p1R2p/2n5/8/P1P5/P4QPP/4R1K1 w - - 5 21"
             selectedSquare:null,
             promoter:false,
             promotionSqr:"",
@@ -60,10 +60,6 @@ class Board extends React.Component<boardProps,boardState>{
         for (let _sqr in this.sqrReff){
             this.sqrReff[_sqr].current.update()
         }
-        this.setState({
-            console1:this.state.chess.moves().join("|"),
-            console2:this.state.chess.fen()
-        })
     }
 
     // --------------------------------------- // handlePieceClick
@@ -154,9 +150,9 @@ class Board extends React.Component<boardProps,boardState>{
                 {board}
                 {this.state.promoter && <Promoter promote={this.promote} color={this.state.chess.turn()}/>}
                 </div>
-            <h1>{this.state.console1}</h1>
-            <h1>{this.state.console2}</h1>
-            <h1>{this.state.console3}</h1>
+            <h3>{this.state.console3}</h3>
+            <h3>{this.state.console1}</h3>
+            <h3>{this.state.console2}</h3>
         </>)
 
         // --------------------------------------- //
