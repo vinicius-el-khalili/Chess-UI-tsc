@@ -1,4 +1,4 @@
-import { Color, Piece, Square } from "chess.js"
+import { Color } from "chess.js"
 import React from "react"
 import PromoterPiece from "./PromoterPiece"
 type promoterProps={
@@ -23,9 +23,6 @@ const style2:React.CSSProperties={
     backgroundColor:"white",
 }
 class Promoter extends React.Component<promoterProps,promoterState>{
-    constructor(props:promoterProps){
-        super(props)
-    }
     render(): React.ReactNode {
         return(<>
         <div style={containerStyle}>

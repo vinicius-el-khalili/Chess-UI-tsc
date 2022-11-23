@@ -8,7 +8,7 @@ import Promoter from "./Promoter";
 // --------------------------------------- LAYOUT
 
   // white:{board:{display:"flex"},row:{display:"flex",flexDirection:"column-reverse"}},
-  //  black:{board:{display:"flex",flexDirection:"row-reverse"},row:{}}
+  // black:{board:{display:"flex",flexDirection:"row-reverse"},row:{}}
 
 // --------------------------------------- BOARD
 type boardProps={}
@@ -32,7 +32,7 @@ class Board extends React.Component<boardProps,boardState>{
         this.state={
             rowStyle:{display:"flex",flexDirection:"column-reverse"},
             boardStyle:{display:"flex"},
-            chess:new Chess("5r2/pp1bP1kp/n1p1R2p/2n5/8/P1P5/P4QPP/4R1K1 w - - 5 21"),
+            chess:new Chess(), //"5r2/pp1bP1kp/n1p1R2p/2n5/8/P1P5/P4QPP/4R1K1 w - - 5 21"
             selectedSquare:null,
             promoter:false,
             promotionSqr:"",
