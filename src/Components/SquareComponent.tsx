@@ -32,7 +32,7 @@ class SquareComponent extends React.Component<SquareProps,SquareState>{
     }
     preMove(){
         // change square background
-        this.setState({background:"cornflowerblue",mover:true})
+        this.setState({background:"rgba(0,0,0,0.4)",mover:true})
     }
     summonPromoter(){
         this.setState({promoter:true})
