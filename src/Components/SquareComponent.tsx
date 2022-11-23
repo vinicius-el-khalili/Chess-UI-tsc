@@ -32,7 +32,7 @@ class SquareComponent extends React.Component<SquareProps,SquareState>{
     }
     preMove(){
         // change square background
-        this.setState({background:"rgba(0,0,0,0.4)",mover:true})
+        this.setState({mover:true})
     }
     summonPromoter(){
         this.setState({promoter:true})
@@ -52,15 +52,38 @@ class SquareComponent extends React.Component<SquareProps,SquareState>{
                 backgroundColor:this.state.background,
                 overflow:"hidden"
             }}>
-                {this.state.piece?(<PieceComponent
+            {this.state.piece?(<PieceComponent
                 sqr={this.props.sqr}
                 handlePieceClick={this.props.handlePieceClick} 
                 piece={this.state.piece}></PieceComponent>):null}
 
-                {this.state.mover&&<MoverComponent 
-                handleMoverClick={this.props.handleMoverClick}
-                sqr={this.props.sqr}
-                />}
+                {this.state.mover&&<>
+                    <MoverComponent 
+                        handleMoverClick={this.props.handleMoverClick}
+                        sqr={this.props.sqr}
+                        />
+
+                    {this.state.piece&&
+                    <div style={{
+                        height:"45px",
+                        width:"45px",
+                        borderRadius:"100%",
+                        border:"2px solid #495057",
+                        opacity:"0.5",
+                        position:"absolute",
+                    }}></div>}
+
+                    {!this.state.piece&&
+                    <div style={{
+                        height:"10px",
+                        width:"10px",
+                        borderRadius:"100%",
+                        backgroundColor:"#495057",
+                        opacity:"0.5",
+                        position:"absolute",
+                        transform:"translate(17.5px,17.5px)"
+                    }}></div>}
+                </>}
 
                 {this.state.promoter&&
                 <div

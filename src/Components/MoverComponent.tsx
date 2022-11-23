@@ -24,7 +24,6 @@ class MoverComponent extends React.Component<MoverProps,MoverState>{
                 width:"45px",
                 height:"45px",
                 position:"absolute",
-                opacity:".4",
                 zIndex:"2",
             }}
             onClick={()=>{this.props.handleMoverClick(this.props.sqr)}}
