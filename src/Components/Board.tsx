@@ -149,6 +149,7 @@ class Board extends React.Component<boardProps,boardState>{
 
         return(<>
             <div className="Board" style={this.state.boardStyle}>
+                <h1>.</h1>
                 {board}
                 {this.state.promoter && <Promoter promote={this.promote} color={this.state.chess.turn()}/>}
                 </div>
